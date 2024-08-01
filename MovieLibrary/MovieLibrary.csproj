@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\Movies\ImdbRating.js" />
+    <Content Remove="wwwroot\js\Movies\ReleaseYear.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\Actors\actors-create.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Actors\actors-details.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Availabilities\availabilities-details.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Availabilities\availabilities-edit.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Movies\movies-create.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Movies\movies-edit.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Movies\ReleaseYear.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="efpt.config.json.user" />
+    <None Include="wwwroot\js\Movies\ImdbRating.js" />
+    <None Include="wwwroot\js\Movies\ReleaseYear.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+  </ItemGroup>
+
+</Project>
