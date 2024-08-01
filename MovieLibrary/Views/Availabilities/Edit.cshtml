@@ -1,0 +1,69 @@
+﻿@model MovieLibrary.Models.Availabilities
+
+@{
+    ViewData["Title"] = Model.AvailabilityName;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1 class="text-center">@Model.AvailabilityName</h1>
+            <hr />
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AvailabilityId" />
+                <div class="form-group row align-items-center">
+                    <label asp-for="AvailabilityName" class="col-sm-2 col-form-label control-label">Name</label>
+                    <div class="col-sm-8">
+                        <input asp-for="AvailabilityName" class="form-control" />
+                        <span asp-validation-for="AvailabilityName" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+
+                <hr />
+
+                <h5>Movies in this Platform:</h5>
+                <div class="movie-list">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var movie in Model.Movie)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.MovieId" class="movie-title">
+                                            @Html.DisplayFor(modelItem => movie.Title)
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/Movies/Edit/@movie.MovieId" class="btn btn-primary btn-sm edit-btn">Edit</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+            <div class="mt-3">
+                <a asp-action="Index" class="btn btn-secondary">All Platforms</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Availabilities/availabilities-edit.css" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,62 @@
+﻿@model MovieLibrary.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="recommended-movies mt-4">
+    <h2 class="text-center">Recommended Movies</h2>
+    <div class="row">
+        @foreach (var movie in Model.RecommendedMovies.Select((value, index) => new { value, index }))
+        {
+            if (movie.index > 0 && movie.index % 4 == 0)
+            {
+                @:</div>
+                @:<div class="row">
+            }
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <a href="@Url.Action("Details", "Movies", new { id = movie.value.MovieId })">
+                        <img src="@movie.value.ImageUrl" class="card-img-top" alt="@movie.value.Title" />
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title movie-title">
+                            <a href="@Url.Action("Details", "Movies", new { id = movie.value.MovieId })">@movie.value.Title</a>
+                        </h5>
+                        <p class="card-text category-name">@movie.value.Category.CategoryName</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="new-releases mt-4">
+    <h2 class="text-center">New Releases</h2>
+    <div class="row">
+        @foreach (var movie in Model.NewReleases.Select((value, index) => new { value, index }))
+        {
+            if (movie.index > 0 && movie.index % 4 == 0)
+            {
+                @:</div>
+                @:<div class="row">
+            }
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <a href="@Url.Action("Details", "Movies", new { id = movie.value.MovieId })">
+                        <img src="@movie.value.ImageUrl" class="card-img-top" alt="@movie.value.Title" />
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title movie-title">
+                            <a href="@Url.Action("Details", "Movies", new { id = movie.value.MovieId })">@movie.value.Title</a>
+                        </h5>
+                        <p class="card-text category-name">@movie.value.Category.CategoryName</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/js/Movies/searchMovie.js"></script>
+<link rel="stylesheet" href="~/css/home.css" />

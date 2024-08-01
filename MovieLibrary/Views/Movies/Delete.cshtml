@@ -1,0 +1,33 @@
+﻿@model MovieLibrary.Models.Movies
+
+@{
+    ViewData["Title"] = $"{Model.Title} - Delete";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Index" class="btn btn-custom btn-back mt-2">All Movies</a>
+</div>
+<hr />
+
+<div>
+   
+    <div>
+        <p><strong>Title:</strong> @Model.Title</p>
+        <p><strong>Released Year:</strong> @Model.ReleaseYear</p>
+        <p><strong>Category:</strong> @Model.Category.CategoryName</p>
+        
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" class="movie-image" />
+        }
+        <hr />
+        <h3>Are you sure you want to delete this Movie?</h3>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="MovieId" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Movies/movies-delete.css" />

@@ -1,0 +1,89 @@
+﻿@model MovieLibrary.Models.Movies
+
+@{
+    ViewData["Title"] = $"{Model.Title} - Details";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-md-3 text-center">
+            <img src="@Model.ImageUrl" class="img-thumbnail">
+            <div class="btn-container">
+                <a asp-action="Edit" asp-route-id="@Model?.MovieId" class="btn btn-custom btn-edit">Edit</a>
+                <a asp-action="Index" class="btn btn-custom btn-back mt-2">All Movies</a>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <section class="col-md-9">
+            <h1>@Model.Title</h1>
+            <hr />
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Category</th>
+                        <td>
+                            <a href="@Url.Action("Details", "Categories", new { id = Model.Category.CategoryId })" class="category-title">@Model.Category.CategoryName</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Actors</th>
+                        <td>
+                            @foreach (var actor in Model.Actor)
+                            {
+                                <div>
+                                    <a href="@Url.Action("Details", "Actors", new { id = actor.ActorId })" class="actors-title">@actor.Name</a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Platform</th>
+                        <td>
+                            @foreach (var availability in Model.Availability)
+                            {
+                                <div>
+                                    <a href="@Url.Action("Details", "Availabilities", new { id = availability.AvailabilityId })" class="platform-title">@availability.AvailabilityName</a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+
+                        <th>Release Year</th>
+                        <td>@Html.DisplayFor(model => model.ReleaseYear)</td>
+                    </tr>
+                    <tr>
+                        <th>IMDb Ranking</th>
+                        <td>@Html.DisplayFor(model => model.Imdbrating)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered mt-4">
+                <tbody>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Watched)</th>
+                        <td>@(Model.Watched == true ? "YES" : "NO")</td>
+                    </tr>
+                    @if (Model.Watched == true)
+                    {
+                        @if (Model.Watched == true)
+                        {
+                            <tr>
+                                <th>Watched Date</th>
+                                <td>@Model.WatchedDate?.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/Movies/movies-details.css" />

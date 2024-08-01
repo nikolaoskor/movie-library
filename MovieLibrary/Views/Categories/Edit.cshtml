@@ -1,0 +1,69 @@
+﻿@model MovieLibrary.Models.Categories
+
+@{
+    ViewData["Title"] = Model.CategoryName;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1 class="text-center">@Model.CategoryName</h1>
+            <hr />
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CategoryId" />
+                <div class="form-group row align-items-center">
+                    <label asp-for="CategoryName" class="col-sm-2 col-form-label control-label">Name</label>
+                    <div class="col-sm-8">
+                        <input asp-for="CategoryName" class="form-control" />
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+
+                <hr />
+
+                <h5>Movies in this Category:</h5>
+                <div class="movie-list">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var movie in Model.Movies)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.MovieId" class="movie-title">
+                                            @Html.DisplayFor(modelItem => movie.Title)
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/Movies/Edit/@movie.MovieId" class="btn btn-primary btn-sm edit-btn">Edit</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+            <div class="mt-3">
+                <a asp-action="Index" class="btn btn-secondary">All Categories</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Categories/categories-edit.css" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

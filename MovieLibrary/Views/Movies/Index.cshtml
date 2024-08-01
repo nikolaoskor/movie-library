@@ -1,0 +1,160 @@
+﻿@model IEnumerable<MovieLibrary.Models.Movies>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-4">
+
+    <!-- Filters Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row g-3">
+
+                <!-- Search by Title -->
+                <div class="col-md-12">
+                    <label for="searchTerm" class="form-label font-weight-bold">Search by Title:</label>
+                    <input type="text" class="form-control" id="searchTerm" name="searchTerm" value="@ViewData["SearchTerm"]">
+                </div>
+
+                <!-- Platform Filter -->
+                <div class="col-md-3">
+                    <label for="availabilityFilter" class="form-label font-weight-bold">Platform</label>
+                    <select class="form-select" id="availabilityFilter" name="availabilityIds" multiple>
+                        @foreach (var availability in (SelectList)ViewData["Availabilities"])
+                        {
+                            <option value="@availability.Value">@availability.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="col-md-3">
+                    <label for="categoryFilter" class="form-label font-weight-bold">Category</label>
+                    <select class="form-select" id="categoryFilter" name="categoryIds" multiple>
+                        @foreach (var category in (SelectList)ViewData["Categories"])
+                        {
+                            <option value="@category.Value">@category.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Actor Filter -->
+                <div class="col-md-3">
+                    <label for="actorFilter" class="form-label font-weight-bold">Actor</label>
+                    <select class="form-select" id="actorFilter" name="actorId">
+                        <option value="">All</option>
+                        @foreach (var actor in (SelectList)ViewData["Actors"])
+                        {
+                            <option value="@actor.Value">@actor.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Watched Filter -->
+                <div class="col-md-3">
+                    <label for="watchedFilter" class="form-label font-weight-bold">Watched:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="watched" value="" id="watchedAll" checked>
+                        <label class="form-check-label" for="watchedAll">All</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="watched" value="YES" id="watchedYes" @(ViewData["Watched"] != null && (bool)ViewData["Watched"] ? "checked" : "")>
+                        <label class="form-check-label" for="watchedYes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="watched" value="NO" id="watchedNo" @(ViewData["Watched"] != null && !(bool)ViewData["Watched"] ? "checked" : "")>
+                        <label class="form-check-label" for="watchedNo">No</label>
+                    </div>
+                </div>
+
+                <!-- Release Year Filter -->
+                <div class="col-md-6">
+                    <label for="yearRange" class="form-label font-weight-bold">Release Year:</label>
+                    <div class="d-flex align-items-center">
+                        <input type="range" class="form-range flex-grow-1" id="yearRangeMin" name="minYear" value="@ViewData["MinYear"]" min="@ViewData["MinYear"]" max="@ViewData["MaxYear"]" step="1">
+                        <input type="range" class="form-range flex-grow-1" id="yearRangeMax" name="maxYear" value="@ViewData["MaxYear"]" min="@ViewData["MinYear"]" max="@ViewData["MaxYear"]" step="1">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span id="minYearValue">@ViewData["MinYear"]</span>
+                        <span id="maxYearValue">@ViewData["MaxYear"]</span>
+                    </div>
+                </div>
+
+                <!-- IMDb Rating Filter -->
+                <div class="col-md-6">
+                    <label for="imdbRange" class="form-label font-weight-bold">IMDb Rating:</label>
+                    <div class="d-flex align-items-center">
+                        <input type="range" class="form-range flex-grow-1" id="imdbRangeMin" name="minRating" value="@ViewData["MinRating"]" min="0" max="10" step="0.1">
+                        <input type="range" class="form-range flex-grow-1" id="imdbRangeMax" name="maxRating" value="@ViewData["MaxRating"]" min="0" max="10" step="0.1">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span id="minRatingValue">@ViewData["MinRating"]</span>
+                        <span id="maxRatingValue">@ViewData["MaxRating"]</span>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-secondary w-100" name="viewAll" value="true">View All</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Movies Table -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    <th class="d-none d-lg-table-cell"></th>
+                    <th class="d-none d-lg-table-cell">IMDb</th>
+                    <th class="d-none d-lg-table-cell">Year</th>
+                    <th class="d-none d-lg-table-cell">@Html.DisplayNameFor(model => model.Category)</th>
+                    <th class="d-none d-lg-table-cell">@Html.DisplayNameFor(model => model.Watched)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a asp-action="Details" asp-route-id="@item.MovieId" class="movie-title">@Html.DisplayFor(modelItem => item.Title)</a></td>
+                        <td class="d-none d-lg-table-cell">
+                            <a asp-action="Details" asp-route-id="@item.MovieId">
+                                <img src="@item.ImageUrl" style="max-width: 100px; max-height: 100px;" />
+                            </a>
+                        </td>
+                        <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Imdbrating)</td>
+                        <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.ReleaseYear)</td>
+                        <td class="d-none d-lg-table-cell">
+                            <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.Category.CategoryId" class="category-title">
+                                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                            </a>
+                        </td>
+                        <td class="d-none d-lg-table-cell">@((item.Watched ?? false) ? "YES" : "NO")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.MovieId" class="btn btn-success btn-custom-width">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.MovieId" class="btn btn-warning btn-custom-width">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.MovieId" class="btn btn-danger btn-custom-width">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Movies/movies.css">
+
+@section Scripts {
+    <script src="~/js/Movies/filterYearRange.js"></script>
+    <script src="~/js/Movies/filterImdbRange.js"></script>
+    <script src="~/js/Movies/searchMovie.js"></script>
+}

@@ -1,0 +1,29 @@
+﻿@model MovieLibrary.Models.Categories
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>@Model.CategoryName</h3>
+    <div style="display: flex; align-items: center;">
+        <a asp-action="Edit" asp-route-id="@Model?.CategoryId" class="edit-button">Edit</a>
+        <a asp-action="Index" class="back-button">All Categories</a>
+    </div>
+</div>
+<hr />
+
+<div>
+    <h4>Movies in this category:</h4>
+    <div class="movies-container">
+        @foreach (var movie in Model.Movies)
+        {
+            <a href="@Url.Action("Details", "Movies", new { id = movie.MovieId })" class="movie-item">
+                <img src="@movie.ImageUrl" alt="@movie.Title" class="movie-image" />
+                <div class="movie-title">@movie.Title</div>
+            </a>
+        }
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Categories/categories-details.css" />

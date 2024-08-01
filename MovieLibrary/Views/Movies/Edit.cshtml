@@ -1,0 +1,108 @@
+﻿@model MovieLibrary.Models.Movies
+
+@{
+    ViewData["Title"] = $"{Model.Title} - Edit";
+}
+
+<link rel="stylesheet" href="~/css/Movies/movies-edit.css" />
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Details" asp-route-id="@Model.MovieId" class="btn btn-warning">Details</a>
+</div>
+<hr />
+
+<form asp-controller="Movies" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="MovieId" />
+
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label bold-label">Title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label bold-label">Image File</label>
+                <input asp-for="ImageFile" type="file" accept="image/*" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div>
+                        <img src="@Model.ImageUrl" alt="Current Image" style="max-height: 200px; max-width: 200px;" />
+                    </div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Imdbrating" class="control-label bold-label">IMDb Rating</label>
+                <div class="input-group">
+                    <input asp-for="Imdbrating" class="form-control" step="0.1" min="0" max="10" readonly />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="increaseRating()">+</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseRating()">-</button>
+                    </div>
+                </div>
+                <span asp-validation-for="Imdbrating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReleaseYear" class="control-label bold-label">Release Year</label>
+                <div class="input-group">
+                    <input asp-for="ReleaseYear" id="releaseYear" class="form-control" readonly />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="increaseYear()">+</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseYear()">-</button>
+                    </div>
+                </div>
+                <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Watched" class="control-label bold-label">Watched</label>
+                <select asp-for="Watched" class="form-control" asp-items="ViewBag.WatchedOptions"></select>
+                <span asp-validation-for="Watched" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label bold-label">Category</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Availability" class="control-label bold-label">Platforms</label>
+                <select class="form-control" asp-items="@ViewBag.Availabilities" multiple="multiple" name="availabilityIds"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Actor" class="control-label bold-label">Actors</label>
+                <select class="form-control" asp-items="@ViewBag.Actors" multiple="multiple" name="actorIds"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/Movies/ImdbRating.js"></script>
+    <script src="~/js/Movies/ReleaseYear.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("releaseYear").value = "@Model.ReleaseYear";
+    </script>
+}

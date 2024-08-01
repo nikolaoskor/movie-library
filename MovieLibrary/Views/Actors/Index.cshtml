@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MovieLibrary.Models.Actors>
+
+@{
+    ViewData["Title"] = "Actors";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Search Form -->
+            <form asp-action="Index" method="get" class="form-inline mb-4">
+                <div class="input-group">
+                    <input type="text" name="searchString" class="form-control" placeholder="Search by name...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                    <div class="input-group-append">
+                        <a asp-action="Index" class="btn btn-secondary">All Actors</a>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Main Content -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.ActorId" class="actor-name">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.ActorId" class="btn btn-success btn-custom-width">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.ActorId" class="btn btn-warning btn-custom-width">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.ActorId" class="btn btn-danger btn-custom-width">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/Actors/actors.css" />

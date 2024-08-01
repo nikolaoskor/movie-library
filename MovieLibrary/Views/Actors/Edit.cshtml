@@ -1,0 +1,64 @@
+﻿@model MovieLibrary.Models.Actors
+
+@{
+    ViewData["Title"] = $"{Model.Name} - Edit";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Details" asp-route-id="@Model.ActorId" class="btn btn-warning">Details</a>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post" class="d-flex align-items-end">
+            <input type="hidden" asp-for="ActorId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mr-2">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <h4>Movies</h4>
+    <table class="table">
+        <tbody>
+            @foreach (var movie in Model.Movie)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Movies" asp-route-id="@movie.MovieId" class="movie-title">
+                            @Html.DisplayFor(modelItem => movie.Title)
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <form asp-action="RemoveMovie" method="post">
+                            <input type="hidden" name="actorId" value="@Model.ActorId" />
+                            <input type="hidden" name="movieId" value="@movie.MovieId" />
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-secondary" asp-action="Index">All Actors</a>
+</div>
+
+@section Scripts {
+    <script src="~/js/Actors/actors-edit.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<link rel="stylesheet" href="~/css/Actors/actors-edit.css" />

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MovieLibrary.Models.Categories>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categories</h1>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @*  Category*@
+             </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CategoryId" class="category-name">
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </a>
+                </td>
+                <td class="text-right">
+                    <!-- Ευθυγράμμιση κουμπιών στα δεξιά -->
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-success btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<link rel="stylesheet" href="~/css/Categories/categories.css" />
