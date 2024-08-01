@@ -1,0 +1,20 @@
+﻿body {
+    background-color: #ffcccc;
+}
+
+.movie-image {
+    height: 400px;
+    width: 300px;
+    object-fit: contain;
+}
+
+.btn-back {
+    background-color: green;
+    color: white;
+    border: 1px solid green;
+}
+
+    .btn-back:hover {
+        background-color: darkgreen;
+        color: white;
+    }

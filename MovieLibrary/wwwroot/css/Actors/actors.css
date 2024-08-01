@@ -1,0 +1,38 @@
+﻿body {
+    background-color: #e0f8e0;
+}
+
+.btn-custom-width {
+    min-width: 75px;
+    margin-right: 5px;
+}
+
+.form-inline .form-control {
+    width: auto;
+    margin-right: 10px;
+}
+
+.table-striped tbody tr td.text-right {
+    text-align: right;
+}
+
+.btn-custom-width {
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 0;
+}
+
+.form-inline .btn {
+    margin-left: 5px;
+}
+
+.table {
+    margin-bottom: 80px;
+}
+
+.actor-name {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

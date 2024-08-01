@@ -1,0 +1,59 @@
+﻿body {
+    background-color: #fce8e8;
+}
+
+.actors-title, .platform-title, .category-title {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.img-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.btn-custom {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    width: 100%; 
+}
+
+.btn-container {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.btn-edit {
+    background-color: yellow;
+    color: black;
+    border: 1px solid yellow;
+}
+
+    .btn-edit:hover {
+        background-color: darkgoldenrod;
+        color: white;
+    }
+
+.btn-back {
+    background-color: green;
+    color: white;
+    border: 1px solid green;
+}
+
+    .btn-back:hover {
+        background-color: darkgreen;
+        color: white;
+    }
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+
+
+

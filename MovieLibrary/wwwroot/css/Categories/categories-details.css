@@ -1,0 +1,57 @@
+﻿body {
+    background-color: #fce8e8;
+}
+
+.movies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.movie-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none; 
+    color: inherit;
+}
+
+.movie-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.movie-title {
+    padding: 10px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.edit-button, .back-button {
+    padding: 8px 16px;
+    border: none; 
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: yellow;
+    margin-right: 10px;
+}
+
+    .edit-button:hover, .back-button:hover {
+        background-color: #f0f0f0;
+        color: #000;
+    }
+
+.back-button {
+    background-color: #ccc;
+}

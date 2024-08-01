@@ -1,0 +1,45 @@
+﻿body {
+    background-color: #f0f8ff;
+}
+
+.movie-list {
+    margin-top: 20px;
+}
+
+    .movie-list table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .movie-list th, .movie-list td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .movie-list th {
+        background-color: #f2f2f2;
+    }
+
+    .movie-list .edit-btn {
+        font-size: 16px;
+        padding: 8px 16px;
+        background-color: #ffc107;
+        color: #000;
+        border: none;
+        cursor: pointer;
+    }
+
+        .movie-list .edit-btn:hover {
+            background-color: #e0a800;
+        }
+
+    .movie-list td.text-center {
+        text-align: center;
+    }
+
+.movie-title {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
